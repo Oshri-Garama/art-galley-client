@@ -5,7 +5,14 @@ import { GalleryContext } from '../../context/GalleryContext';
 const Gallery = () => {
     const { arts } = useContext(GalleryContext);
     return (
-        <div>This is the gallery container</div>
+        <div className='arts-list'>
+            {arts.map(art => (
+            <div className='single-art'>
+             <span>{art.name}</span>
+             <span>{art.description}</span>
+            </div>
+            ))}
+        </div>
     )
 }
 
