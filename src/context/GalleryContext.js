@@ -96,10 +96,10 @@ export const GalleryProvider = (props) => {
     if (isEmpty(searchTerm)) return setArts(artGallery);
 
     const filteredArts = filter(arts, (art) => {
-      const { name, artistName, description } = art;
+      const { name, artistName } = art;
       return isArtMatchToFilter({
         searchTerm,
-        values: { name, artistName, description },
+        values: { name, artistName },
       });
     });
 
