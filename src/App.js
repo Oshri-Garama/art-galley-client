@@ -1,11 +1,14 @@
 import Search from './components/Search/Search';
 import Gallery from './components/Gallery/Gallery'
+import { GalleryProvider } from './context/GalleryContext';
 
 const App = () => {
   return (
     <div className="App">
-      <Search/>
-      <Gallery/>
+      <GalleryProvider>
+        <Search/>
+        <Gallery/>
+      </GalleryProvider>
     </div>
   );
 }
