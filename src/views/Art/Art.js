@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, CardContent, CardMedia, Typography } from "@mui/material";
+import { Card, CardContent, CardMedia } from "@mui/material";
 import { ArtInformation } from "./Art.style";
 
 const Art = ({ art }) => {

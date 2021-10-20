@@ -3,8 +3,6 @@ import styled from "styled-components";
 export const ArtInformation = styled.div`
   display: flex;
   flex-direction: column;
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 
   .art-name {
     font-weight: 500;
