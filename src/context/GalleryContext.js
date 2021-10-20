@@ -40,6 +40,18 @@ export const GalleryProvider = (props) => {
             name: "Art number 6",
             description: "TEST",
             image_url: ""
+        },
+        {
+            id: 7,
+            name: "Art number 7",
+            description: "TEST",
+            image_url: ""
+        },
+        {
+            id: 8,
+            name: "Art number 8",
+            description: "TEST",
+            image_url: ""
         }
     ])
 
