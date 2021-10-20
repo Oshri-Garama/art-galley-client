@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export const ArtInformation = styled.div`
   display: flex;
@@ -21,5 +22,16 @@ export const ArtInformation = styled.div`
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
+  }
+`;
+
+export const StyledLink = styled(Link)`
+  color: inherit;
+  &:focus,
+  &:hover,
+  &:visited,
+  &:link,
+  &:active {
+    text-decoration: none;
   }
 `;
