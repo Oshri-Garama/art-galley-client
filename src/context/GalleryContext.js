@@ -118,7 +118,9 @@ export const GalleryProvider = ({ children }) => {
   };
 
   return (
-    <GalleryContext.Provider value={{ arts, filterGallery, getArtById, art }}>
+    <GalleryContext.Provider
+      value={{ arts, filterGallery, getArtById, art, setArt }}
+    >
       {children}
     </GalleryContext.Provider>
   );

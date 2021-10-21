@@ -5,7 +5,7 @@ import { ArtInformation, StyledLink } from "./Art.style";
 const Art = ({ art }) => {
   return (
     <Card id={art.id} sx={{ flexBasis: "20%", margin: 2, height: 380 }}>
-      <StyledLink to={`/art/${art.id}`} state={{ id: art.id }}>
+      <StyledLink to={`/art/${art.id}`}>
         <CardMedia height="250" component="img" image={art.image} />
         <CardContent>
           <ArtInformation>
