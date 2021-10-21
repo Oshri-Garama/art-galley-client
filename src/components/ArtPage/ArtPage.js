@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { GalleryContext } from "../../context/GalleryContext";
 import { Card, CardContent, CardMedia } from "@mui/material";
-// import Chat from "./Chat/Chat";
+import Chat from "./Chat/Chat";
 import { ArtPageContainer, ArtInformationExtended } from "./ArtPage.style";
 import isEmpty from "lodash/isEmpty";
 
@@ -37,7 +37,7 @@ const ArtPage = ({ match, history }) => {
             </ArtInformationExtended>
           </CardContent>
         </Card>
-        {/* <Chat art={art} history={history} /> */}
+        <Chat art={art} history={history} />
       </ArtPageContainer>
     )
   );
