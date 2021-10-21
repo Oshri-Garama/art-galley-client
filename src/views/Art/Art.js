@@ -1,7 +1,6 @@
 import React from "react";
 import { Card, CardContent, CardMedia } from "@mui/material";
 import { ArtInformation, StyledLink } from "./Art.style";
-import ArtPage from "../../components/ArtPage/ArtPage";
 
 const Art = ({ art }) => {
   return (

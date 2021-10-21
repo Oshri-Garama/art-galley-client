@@ -1,17 +1,26 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./App";
-import ArtPage from "./components/ArtPage/ArtPage";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { GalleryProvider } from "./context/GalleryContext";
+import Routes from "./router";
+
+const Providers = () => {
+  return (
+    <GalleryProvider>
+      <Routes />
+    </GalleryProvider>
+  );
+};
 
 const BasicComponent = () => {
   return (
-    <Router>
-      <Switch>
-        <Route path="/art/:id" component={ArtPage} />
-        <Route path="/" component={App} />
-      </Switch>
-    </Router>
+    <GalleryProvider>
+      <Router>
+        <Switch>
+          <Route path="/" component={Providers} />
+        </Switch>
+      </Router>
+    </GalleryProvider>
   );
 };
 
