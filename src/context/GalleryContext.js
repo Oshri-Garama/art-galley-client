@@ -15,7 +15,7 @@ export const GalleryContext = createContext();
 
 const artGallery = [
   {
-    id: 1,
+    id: "be27589d-253f-4c98-aefa-a1e1e363e15c",
     name: "Susan",
     artistName: "Susan",
     description:
@@ -23,7 +23,7 @@ const artGallery = [
     image: susanArt,
   },
   {
-    id: 2,
+    id: "69420241-f192-466c-b32d-84af1eb86926",
     name: "Mona Lisa",
     artistName: "Leonardo da Vinci",
     description:
@@ -31,7 +31,7 @@ const artGallery = [
     image: monaLisa,
   },
   {
-    id: 3,
+    id: "43459127-caf6-48a9-b589-d74e0f7aa921",
     name: "Surprised baby",
     artistName: "Some father",
     description:
@@ -39,7 +39,7 @@ const artGallery = [
     image: baby,
   },
   {
-    id: 4,
+    id: "91753dc5-160e-4713-8b7f-af0e34ff3a76",
     name: "Pi-tongue",
     artistName: "A random person",
     description:
@@ -47,7 +47,7 @@ const artGallery = [
     image: dog,
   },
   {
-    id: 5,
+    id: "1e2a8870-f1fc-4477-8989-6f5d939d38c0",
     name: "Human?",
     artistName: "Nature",
     description:
@@ -55,7 +55,7 @@ const artGallery = [
     image: tree,
   },
   {
-    id: 6,
+    id: "d5c3d054-749b-41f4-b9a5-c40a27b5e299",
     name: "Cutie cat",
     artistName: "Katy",
     description:
@@ -63,7 +63,7 @@ const artGallery = [
     image: cat,
   },
   {
-    id: 7,
+    id: "042d176b-c358-4062-84a1-e4455914a85f",
     name: "Red light, Green light",
     artistName: `"Squid game"'s doll`,
     description:
@@ -71,7 +71,7 @@ const artGallery = [
     image: dogFreeze,
   },
   {
-    id: 8,
+    id: "70a7dac9-c417-4ccd-b8c4-59e9be2dd4d2",
     name: "Watercolor",
     artistName: "Watercolor",
     description:
@@ -90,6 +90,7 @@ const isArtMatchToFilter = ({ searchTerm, values }) => {
 
 export const GalleryProvider = (props) => {
   const [arts, setArts] = useState(artGallery);
+  const [art, setArt] = useState({});
 
   const filterGallery = ({ searchTerm }) => {
     // Undo filtering
@@ -106,8 +107,18 @@ export const GalleryProvider = (props) => {
     setArts(filteredArts);
   };
 
+  const getArtById = ({ artId, history }) => {
+    //TODO: Should be fetched from the backend.
+    const art = find(artGallery, { id: artId });
+    if (isEmpty(art)) {
+      history.replace("/");
+    }
+
+    setArt(art);
+  };
+
   return (
-    <GalleryContext.Provider value={{ arts, filterGallery }}>
+    <GalleryContext.Provider value={{ arts, filterGallery, getArtById, art }}>
       {props.children}
     </GalleryContext.Provider>
   );
