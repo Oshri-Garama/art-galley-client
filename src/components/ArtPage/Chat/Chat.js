@@ -111,6 +111,9 @@ const Chat = ({ art, history }) => {
             variant="standard"
             value={currentMessage}
             onChange={(event) => setCurrentMessage(event.target.value)}
+            onKeyPress={(event) => {
+              event.key === "Enter" && sendChatMessage();
+            }}
           />
           <Button
             endIcon={<Send />}
