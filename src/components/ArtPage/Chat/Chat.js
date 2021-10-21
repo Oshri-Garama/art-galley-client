@@ -13,27 +13,62 @@ import { ChatWrapper } from "./Chat.style";
 import { ChatContext } from "../../../context/ChatContext";
 import moment from "moment";
 
+const getFormattedMessage = ({ message, username, roomId }) => {
+  return {
+    roomId,
+    username,
+    message,
+    time: moment().format("LT"),
+  };
+};
+
 const Chat = ({ art, history }) => {
-  const { connect, joinRoom, sendMessage } = useContext(ChatContext);
+  const { socket, joinRoom, leaveRoom, sendMessage } = useContext(ChatContext);
   const [currentMessage, setCurrentMessage] = useState("");
+  const [currentMessages, setCurrentMessages] = useState([]);
+  const [username, setUsername] = useState("oshri");
 
   const sendChatMessage = async () => {
     if (!isEmpty(currentMessage)) {
-      const data = {
+      const data = getFormattedMessage({
         roomId: art.id,
-        userName: "Oshri",
+        username,
         message: currentMessage,
-        time: moment().format("LT"),
-      };
+      });
+      setCurrentMessage("");
       await sendMessage(data);
+      setCurrentMessages((list) => [...list, data]);
     }
+  };
+
+  const onGoBack = async () => {
+    history.replace("/");
+    const data = getFormattedMessage({
+      roomId: art.id,
+      username,
+      message: `${username} just left the room`,
+    });
+
+    await leaveRoom(data);
+    setCurrentMessages((list) => [...list, data]);
   };
 
   useEffect(() => {
     if (!isEmpty(art)) {
-      joinRoom({ roomId: art.id });
+      const data = getFormattedMessage({
+        roomId: art.id,
+        username,
+        message: `${username} just entered the room`,
+      });
+      joinRoom(data);
     }
-  }, [art]);
+  }, [art, username, joinRoom, leaveRoom, sendMessage]);
+
+  useEffect(() => {
+    socket.on("receive_message", (data) => {
+      setCurrentMessages((list) => [...list, data]);
+    });
+  }, [socket]);
 
   return (
     <Card
@@ -49,13 +84,17 @@ const Chat = ({ art, history }) => {
       <ChatWrapper>
         <CardContent className="chat-content">
           <IconButton
-            onClick={() => history.replace("/")}
+            onClick={() => onGoBack()}
             className="back-button"
             color="primary"
           >
             <ArrowBack />
           </IconButton>
-          <div>BODY</div>
+          {currentMessages.map((data, index) => (
+            <div key={index} className="message">
+              {data.message}
+            </div>
+          ))}
         </CardContent>
         <CardActions className="card-actions">
           <TextField
@@ -63,6 +102,7 @@ const Chat = ({ art, history }) => {
             className="chat-input"
             label="Standard"
             variant="standard"
+            value={currentMessage}
             onChange={(event) => setCurrentMessage(event.target.value)}
           />
           <Button
