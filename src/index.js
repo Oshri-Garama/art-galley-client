@@ -3,12 +3,16 @@ import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { GalleryProvider } from "./context/GalleryContext";
 import Routes from "./router";
+import { GlobalStyles } from "./styles/GlobalStyles.style";
 
 const Providers = () => {
   return (
-    <GalleryProvider>
-      <Routes />
-    </GalleryProvider>
+    <>
+      <GlobalStyles />
+      <GalleryProvider>
+        <Routes />
+      </GalleryProvider>
+    </>
   );
 };
 
