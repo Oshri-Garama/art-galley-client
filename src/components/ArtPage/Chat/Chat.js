@@ -13,6 +13,7 @@ import isEmpty from "lodash/isEmpty";
 import { ChatWrapper } from "./Chat.style";
 import { ChatContext } from "../../../context/ChatContext";
 import moment from "moment";
+import ScrollToBottom from "react-scroll-to-bottom";
 
 const getFormattedMessage = ({
   message,
@@ -99,16 +100,20 @@ const Chat = ({ art, history }) => {
           >
             <ArrowBack />
           </IconButton>
-          {currentMessages.map((data, index) => (
-            <Message key={index} data={data} currentUser={username} />
-          ))}
+          <ScrollToBottom className="messages-wrapper">
+            {currentMessages.map((data, index) => (
+              <Message key={index} data={data} currentUser={username} />
+            ))}
+          </ScrollToBottom>
         </CardContent>
         <CardActions className="card-actions">
           <TextField
-            id="standard-basic"
+            id="filled-multiline-static"
             className="chat-input"
             placeholder="Type a message..."
-            variant="standard"
+            multiline
+            rows="2"
+            autoComplete={false}
             value={currentMessage}
             onChange={(event) => setCurrentMessage(event.target.value)}
             onKeyPress={(event) => {
