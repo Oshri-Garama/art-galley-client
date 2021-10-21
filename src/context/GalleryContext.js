@@ -88,7 +88,7 @@ const isArtMatchToFilter = ({ searchTerm, values }) => {
   );
 };
 
-export const GalleryProvider = (props) => {
+export const GalleryProvider = ({ children }) => {
   const [arts, setArts] = useState(artGallery);
   const [art, setArt] = useState({});
 
@@ -119,7 +119,7 @@ export const GalleryProvider = (props) => {
 
   return (
     <GalleryContext.Provider value={{ arts, filterGallery, getArtById, art }}>
-      {props.children}
+      {children}
     </GalleryContext.Provider>
   );
 };

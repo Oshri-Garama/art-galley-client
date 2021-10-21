@@ -1,7 +1,19 @@
 import React, { useContext, useEffect } from "react";
 import { GalleryContext } from "../../context/GalleryContext";
-import { Card, CardContent, CardMedia } from "@mui/material";
-import { ArtPageContainer, ArtInformationExtended } from "./ArtPage.style";
+import {
+  IconButton,
+  Button,
+  Card,
+  CardContent,
+  CardMedia,
+  CardActions,
+} from "@mui/material";
+import { Send, ArrowBack } from "@material-ui/icons";
+import {
+  ArtPageContainer,
+  ArtInformationExtended,
+  ChatWrapper,
+} from "./ArtPage.style";
 import isEmpty from "lodash/isEmpty";
 
 const ArtPage = ({ match, history }) => {
@@ -15,8 +27,14 @@ const ArtPage = ({ match, history }) => {
   return (
     !isEmpty(art) && (
       <ArtPageContainer>
-        <Card id={art.id} sx={{ flexBasis: "45%", height: 800 }}>
-          <CardMedia height="500" component="img" image={art.image} />
+        <Card
+          id={art.id}
+          sx={{
+            flexBasis: "50%",
+            height: 800,
+          }}
+        >
+          <CardMedia height="550" component="img" image={art.image} />
           <CardContent>
             <ArtInformationExtended>
               <span className="art-name">{art.name}</span>
@@ -24,6 +42,41 @@ const ArtPage = ({ match, history }) => {
               <span className="description">{art.description}</span>
             </ArtInformationExtended>
           </CardContent>
+        </Card>
+        <Card
+          id={art.id}
+          sx={{
+            marginLeft: 1,
+            boxShadow:
+              "0px 2px 1px -1px yellow, 0px 1px 1px 0px red, 0px 1px 3px 0px blue",
+            flexBasis: "40%",
+            height: 800,
+          }}
+        >
+          <ChatWrapper>
+            <CardContent className="chat-content">
+              <IconButton
+                onClick={() => history.replace("/")}
+                className="back-button"
+                color="primary"
+              >
+                <ArrowBack />
+              </IconButton>
+              ** ChatWrapper + Chat component here **
+              <div>Me: Test</div>
+              <div>You: Test</div>
+            </CardContent>
+            <CardActions className="card-actions">
+              <Button
+                endIcon={<Send />}
+                variant="contained"
+                size="small"
+                color="primary"
+              >
+                Send
+              </Button>
+            </CardActions>
+          </ChatWrapper>
         </Card>
       </ArtPageContainer>
     )
