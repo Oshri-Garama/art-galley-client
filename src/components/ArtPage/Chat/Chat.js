@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import {
   IconButton,
   Button,
@@ -9,14 +9,14 @@ import {
 import { Send, ArrowBack } from "@material-ui/icons";
 import isEmpty from "lodash/isEmpty";
 import { ChatWrapper } from "./Chat.style";
-import io from "socket.io-client";
-
-const socket = io.connect(process.env.REACT_APP_IO_SOCKET_SERVER_ORIGIN);
+import { ChatContext } from "../../../context/ChatContext";
 
 const Chat = ({ art, history }) => {
+  const { connect, joinRoom } = useContext(ChatContext);
+
   useEffect(() => {
     if (!isEmpty(art)) {
-      socket.emit("join_chat", { artId: art.id });
+      joinRoom({ roomId: art.id });
     }
   }, [art]);
 

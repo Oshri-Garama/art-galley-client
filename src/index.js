@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { GalleryProvider } from "./context/GalleryContext";
+import { ChatProvider } from "./context/ChatContext";
 import Routes from "./router";
 import { GlobalStyles } from "./styles/GlobalStyles.style";
 
@@ -10,7 +11,9 @@ const Providers = () => {
     <>
       <GlobalStyles />
       <GalleryProvider>
-        <Routes />
+        <ChatProvider>
+          <Routes />
+        </ChatProvider>
       </GalleryProvider>
     </>
   );
