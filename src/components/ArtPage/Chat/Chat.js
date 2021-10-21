@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import Message from "./Message/Message";
 import {
   IconButton,
   TextField,
@@ -13,11 +14,17 @@ import { ChatWrapper } from "./Chat.style";
 import { ChatContext } from "../../../context/ChatContext";
 import moment from "moment";
 
-const getFormattedMessage = ({ message, username, roomId }) => {
+const getFormattedMessage = ({
+  message,
+  username,
+  roomId,
+  chatInformation,
+}) => {
   return {
     roomId,
     username,
     message,
+    chatInformation,
     time: moment().format("LT"),
   };
 };
@@ -47,6 +54,7 @@ const Chat = ({ art, history }) => {
       roomId: art.id,
       username,
       message: `${username} just left the room`,
+      chatInformation: true,
     });
 
     await leaveRoom(data);
@@ -59,6 +67,7 @@ const Chat = ({ art, history }) => {
         roomId: art.id,
         username,
         message: `${username} just entered the room`,
+        chatInformation: true,
       });
       joinRoom(data);
     }
@@ -91,16 +100,14 @@ const Chat = ({ art, history }) => {
             <ArrowBack />
           </IconButton>
           {currentMessages.map((data, index) => (
-            <div key={index} className="message">
-              {data.message}
-            </div>
+            <Message key={index} data={data} />
           ))}
         </CardContent>
         <CardActions className="card-actions">
           <TextField
             id="standard-basic"
             className="chat-input"
-            label="Standard"
+            placeholder="Type a message..."
             variant="standard"
             value={currentMessage}
             onChange={(event) => setCurrentMessage(event.target.value)}
