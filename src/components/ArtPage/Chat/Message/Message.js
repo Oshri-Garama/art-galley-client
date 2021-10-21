@@ -1,14 +1,24 @@
 import React from "react";
 import { MessageWrapper, MessageInfo } from "./Message.style";
 
-const Message = ({ data }) => {
+const Message = ({ data, currentUser }) => {
   const { username, message, time, chatInformation } = data;
-
+  const isMyMessage = currentUser === username;
   return (
-    <MessageWrapper>
+    <MessageWrapper
+      className={!isMyMessage && !chatInformation && "guest-message"}
+    >
       {!chatInformation && (
-        <MessageInfo>
-          <span className="username">{username}</span>
+        <MessageInfo
+          className={!isMyMessage && !chatInformation && "guest-message"}
+        >
+          <span
+            className={
+              isMyMessage || chatInformation ? "local_message" : "guest-message"
+            }
+          >
+            {isMyMessage ? "You" : username}
+          </span>
           <span className="time">{time}</span>
         </MessageInfo>
       )}

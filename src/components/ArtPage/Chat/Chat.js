@@ -100,7 +100,7 @@ const Chat = ({ art, history }) => {
             <ArrowBack />
           </IconButton>
           {currentMessages.map((data, index) => (
-            <Message key={index} data={data} />
+            <Message key={index} data={data} currentUser={username} />
           ))}
         </CardContent>
         <CardActions className="card-actions">

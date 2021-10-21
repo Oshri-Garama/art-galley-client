@@ -6,6 +6,10 @@ export const MessageWrapper = styled.div`
   margin-bottom: 5px;
   padding: 10px;
   box-shadow: 0 3px 10px rgb(0 10 200 / 0.2);
+
+  &.guest-message {
+    align-items: flex-end;
+  }
   .chat-message {
     font-size: 18px;
   }
@@ -20,9 +24,17 @@ export const MessageInfo = styled.div`
   display: flex;
   font-weight: bold;
   margin-bottom: 5px;
-  .username {
+
+  &.guest-message {
+    flex-direction: row-reverse;
+  }
+  .local_message {
     color: blue;
     margin-right: 5px;
+  }
+  .guest-message {
+    color: blue;
+    margin-left: 5px;
   }
 
   .time {
