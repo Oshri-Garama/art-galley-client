@@ -18,6 +18,11 @@ export const ChatWrapper = styled.div`
   }
 
   .card-actions {
-    align-self: flex-end;
+    display: flex;
+    align-items: center;
+    .chat-input {
+      flex-basis: 90%;
+      margin-right: 10px;
+    }
   }
 `;

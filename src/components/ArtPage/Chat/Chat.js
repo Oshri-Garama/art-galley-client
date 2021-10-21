@@ -1,6 +1,7 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   IconButton,
+  TextField,
   Button,
   Card,
   CardContent,
@@ -10,9 +11,23 @@ import { Send, ArrowBack } from "@material-ui/icons";
 import isEmpty from "lodash/isEmpty";
 import { ChatWrapper } from "./Chat.style";
 import { ChatContext } from "../../../context/ChatContext";
+import moment from "moment";
 
 const Chat = ({ art, history }) => {
-  const { connect, joinRoom } = useContext(ChatContext);
+  const { connect, joinRoom, sendMessage } = useContext(ChatContext);
+  const [currentMessage, setCurrentMessage] = useState("");
+
+  const sendChatMessage = async () => {
+    if (!isEmpty(currentMessage)) {
+      const data = {
+        roomId: art.id,
+        userName: "Oshri",
+        message: currentMessage,
+        time: moment().format("LT"),
+      };
+      await sendMessage(data);
+    }
+  };
 
   useEffect(() => {
     if (!isEmpty(art)) {
@@ -40,16 +55,22 @@ const Chat = ({ art, history }) => {
           >
             <ArrowBack />
           </IconButton>
-          ** ChatWrapper + Chat component here **
-          <div>Me: Test</div>
-          <div>You: Test</div>
+          <div>BODY</div>
         </CardContent>
         <CardActions className="card-actions">
+          <TextField
+            id="standard-basic"
+            className="chat-input"
+            label="Standard"
+            variant="standard"
+            onChange={(event) => setCurrentMessage(event.target.value)}
+          />
           <Button
             endIcon={<Send />}
             variant="contained"
             size="small"
             color="primary"
+            onClick={() => sendChatMessage()}
           >
             Send
           </Button>

@@ -9,7 +9,16 @@ export const ChatProvider = ({ children }) => {
     socket.emit("join_chat", { artId: roomId });
   };
 
+  // Should implement and supply when react component is unmounted
+  const disconnect = () => {};
+
+  const sendMessage = async (data) => {
+    await socket.emit("send_message", data);
+  };
+
   return (
-    <ChatContext.Provider value={{ joinRoom }}>{children}</ChatContext.Provider>
+    <ChatContext.Provider value={{ joinRoom, sendMessage }}>
+      {children}
+    </ChatContext.Provider>
   );
 };
