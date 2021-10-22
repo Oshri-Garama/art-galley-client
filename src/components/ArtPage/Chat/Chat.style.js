@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const ChatWrapper = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -38,10 +39,9 @@ export const NicknameSelectPopupWrapper = styled.div`
   position: absolute;
   padding: 20px;
   text-align: center;
-  top: 30%;
-  left: 62%;
-  margin-top: -25px;
-  margin-left: -38px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   width: 400px;
   height: 300px;
   box-shadow: 0 5px 20px rgb(0 10 200 / 0.2);
