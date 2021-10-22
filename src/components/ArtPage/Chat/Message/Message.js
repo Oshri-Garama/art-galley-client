@@ -6,7 +6,7 @@ const Message = ({ data, currentUser }) => {
   const isMyMessage = currentUser === nickname;
   return (
     <MessageWrapper
-      className={!isMyMessage && !chatInformation && "guest-message"}
+      className={(!isMyMessage || chatInformation) && "guest-message"}
     >
       {!chatInformation && (
         <MessageInfo
