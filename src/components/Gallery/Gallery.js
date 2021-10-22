@@ -1,15 +1,27 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { GalleryContext } from "../../context/GalleryContext";
 import Art from "../../views/Art/Art";
-import { GalleryContainer, EmptyState } from "./Gallery.style";
+import { GalleryContainer, EmptyState, LoadingWrapper } from "./Gallery.style";
 import isEmpty from "lodash/isEmpty";
+import { CircularProgress } from "@mui/material";
 
 const Gallery = () => {
   const { arts, getAllArts } = useContext(GalleryContext);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    getAllArts();
+    getAllArts().then(() => {
+      setIsLoading(false);
+    });
   }, []);
+
+  if (isLoading) {
+    return (
+      <LoadingWrapper>
+        <CircularProgress />
+      </LoadingWrapper>
+    );
+  }
 
   return isEmpty(arts) ? (
     <EmptyState key="empty-state">
