@@ -8,22 +8,26 @@ import {
   CardContent,
   CardActions,
 } from "@mui/material";
-import { Send, ArrowBack } from "@material-ui/icons";
+import { Send, ArrowBack, TransitEnterexit } from "@material-ui/icons";
 import isEmpty from "lodash/isEmpty";
-import { ChatWrapper } from "./Chat.style";
+import {
+  ChatWrapper,
+  NicknameSelectPopupWrapper,
+  NicknameSelectPopupContent,
+} from "./Chat.style";
 import { ChatContext } from "../../../context/ChatContext";
 import moment from "moment";
 import ScrollToBottom from "react-scroll-to-bottom";
 
 const getFormattedMessage = ({
   message,
-  username,
+  nickname,
   roomId,
   chatInformation,
 }) => {
   return {
     roomId,
-    username,
+    nickname,
     message,
     chatInformation,
     time: moment().format("LT"),
@@ -34,13 +38,31 @@ const Chat = ({ art, history }) => {
   const { socket, joinRoom, leaveRoom, sendMessage } = useContext(ChatContext);
   const [currentMessage, setCurrentMessage] = useState("");
   const [currentMessages, setCurrentMessages] = useState([]);
-  const [username, setUsername] = useState("oshri");
+  const [nickname, setNickname] = useState("");
+  const [showNicknameSelectPopup, setShowNicknameSelectPopup] = useState(false);
+
+  const onSubmitNickname = () => {
+    if (!isEmpty(art) && !isEmpty(nickname)) {
+      const data = getFormattedMessage({
+        roomId: art.id,
+        nickname,
+        message: `${nickname} just entered the room`,
+        chatInformation: true,
+      });
+      joinRoom(data);
+      setShowNicknameSelectPopup(false);
+    }
+  };
 
   const sendChatMessage = async () => {
+    if (isEmpty(nickname)) {
+      return setShowNicknameSelectPopup(true);
+    }
+
     if (!isEmpty(currentMessage)) {
       const data = getFormattedMessage({
         roomId: art.id,
-        username,
+        nickname,
         message: currentMessage,
       });
       setCurrentMessage("");
@@ -53,26 +75,14 @@ const Chat = ({ art, history }) => {
     history.replace("/");
     const data = getFormattedMessage({
       roomId: art.id,
-      username,
-      message: `${username} just left the room`,
+      nickname,
+      message: `${nickname} just left the room`,
       chatInformation: true,
     });
 
     await leaveRoom(data);
     setCurrentMessages((list) => [...list, data]);
   };
-
-  useEffect(() => {
-    if (!isEmpty(art)) {
-      const data = getFormattedMessage({
-        roomId: art.id,
-        username,
-        message: `${username} just entered the room`,
-        chatInformation: true,
-      });
-      joinRoom(data);
-    }
-  }, [art, username, joinRoom, leaveRoom, sendMessage]);
 
   useEffect(() => {
     socket.on("receive_message", (data) => {
@@ -102,9 +112,36 @@ const Chat = ({ art, history }) => {
           </IconButton>
           <ScrollToBottom className="messages-wrapper">
             {currentMessages.map((data, index) => (
-              <Message key={index} data={data} currentUser={username} />
+              <Message key={index} data={data} currentUser={nickname} />
             ))}
           </ScrollToBottom>
+          {showNicknameSelectPopup && (
+            <NicknameSelectPopupWrapper>
+              <span>Please provide a nickname to continue</span>
+              <NicknameSelectPopupContent>
+                <TextField
+                  id="nickname"
+                  inputProps={{ maxLength: 30 }}
+                  className="nickname-input"
+                  placeholder="Your nickname"
+                  onChange={(event) => setNickname(event.target.value)}
+                  onKeyPress={(event) => {
+                    event.key === "Enter" && onSubmitNickname();
+                  }}
+                />
+                <Button
+                  className="join-button"
+                  endIcon={<TransitEnterexit />}
+                  variant="contained"
+                  size="large"
+                  color="primary"
+                  onClick={() => onSubmitNickname()}
+                >
+                  Join chat room
+                </Button>
+              </NicknameSelectPopupContent>
+            </NicknameSelectPopupWrapper>
+          )}
         </CardContent>
         <CardActions className="card-actions">
           <TextField

@@ -33,3 +33,28 @@ export const ChatWrapper = styled.div`
     overflow-y: scroll;
   }
 `;
+
+export const NicknameSelectPopupWrapper = styled.div`
+  position: absolute;
+  padding: 20px;
+  text-align: center;
+  top: 25%;
+  left: 38%;
+  margin-top: -25px;
+  margin-left: -38px;
+  width: 400px;
+  height: 300px;
+  box-shadow: 0 5px 20px rgb(0 10 200 / 0.2);
+  background-color: white;
+`;
+
+export const NicknameSelectPopupContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  .nickname-input {
+    margin-bottom: 10px;
+  }
+`;
