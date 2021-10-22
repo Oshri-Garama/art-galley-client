@@ -10,9 +10,12 @@ const Gallery = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    getAllArts().then(() => {
+    const fetchArts = async () => {
+      await getAllArts();
       setIsLoading(false);
-    });
+    };
+
+    fetchArts();
   }, []);
 
   if (isLoading) {
