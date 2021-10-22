@@ -38,8 +38,8 @@ export const NicknameSelectPopupWrapper = styled.div`
   position: absolute;
   padding: 20px;
   text-align: center;
-  top: 25%;
-  left: 38%;
+  top: 30%;
+  left: 62%;
   margin-top: -25px;
   margin-left: -38px;
   width: 400px;

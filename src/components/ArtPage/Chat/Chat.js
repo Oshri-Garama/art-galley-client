@@ -45,7 +45,9 @@ const Chat = ({ art, history }) => {
   } = useContext(ChatContext);
   const [currentMessage, setCurrentMessage] = useState("");
   const [currentMessages, setCurrentMessages] = useState([]);
-  const [showNicknameSelectPopup, setShowNicknameSelectPopup] = useState(false);
+  const [showNicknameSelectPopup, setShowNicknameSelectPopup] = useState(
+    isEmpty(getCurrentNickname())
+  );
   const [nickname, setNickname] = useState(getCurrentNickname());
 
   const onSubmitNickname = () => {
@@ -165,6 +167,7 @@ const Chat = ({ art, history }) => {
             rows="2"
             autoComplete={false}
             value={currentMessage}
+            disabled={showNicknameSelectPopup}
             onChange={(event) => setCurrentMessage(event.target.value)}
             onKeyPress={(event) => {
               event.key === "Enter" && sendChatMessage();
@@ -176,6 +179,7 @@ const Chat = ({ art, history }) => {
             size="small"
             color="primary"
             onClick={() => sendChatMessage()}
+            disabled={showNicknameSelectPopup}
           >
             Send
           </Button>
