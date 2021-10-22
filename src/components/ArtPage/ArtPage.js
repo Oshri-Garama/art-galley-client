@@ -28,11 +28,11 @@ const ArtPage = ({ match, history }) => {
             height: 800,
           }}
         >
-          <CardMedia height="550" component="img" image={art.image} />
+          <CardMedia height="550" component="img" image={art.image_url} />
           <CardContent>
             <ArtInformationExtended>
               <span className="art-name">{art.name}</span>
-              <span className="artist-name">By {art.artistName}</span>
+              <span className="artist-name">By {art.artist_name}</span>
               <span className="description">{art.description}</span>
             </ArtInformationExtended>
           </CardContent>

@@ -23,10 +23,10 @@ export const GalleryProvider = ({ children }) => {
     if (isEmpty(searchTerm)) return setArts(await galleryService.getAll());
 
     const filteredArts = filter(arts, (art) => {
-      const { name, artistName } = art;
+      const { name, artist_name } = art;
       return isArtMatchToFilter({
         searchTerm,
-        values: { name, artistName },
+        values: { name, artist_name },
       });
     });
 
