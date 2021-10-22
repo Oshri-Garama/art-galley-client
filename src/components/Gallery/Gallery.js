@@ -1,11 +1,16 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { GalleryContext } from "../../context/GalleryContext";
 import Art from "../../views/Art/Art";
 import { GalleryContainer, EmptyState } from "./Gallery.style";
 import isEmpty from "lodash/isEmpty";
 
 const Gallery = () => {
-  const { arts } = useContext(GalleryContext);
+  const { arts, getAllArts } = useContext(GalleryContext);
+
+  useEffect(() => {
+    getAllArts();
+  }, []);
+
   return isEmpty(arts) ? (
     <EmptyState key="empty-state">
       There's no arts matched to the search term you provided, Please try again
