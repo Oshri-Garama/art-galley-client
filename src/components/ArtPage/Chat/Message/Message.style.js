@@ -4,11 +4,12 @@ export const MessageWrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 5px;
+  align-items: flex-end;
   padding: 10px;
   box-shadow: 0 3px 10px rgb(0 10 200 / 0.2);
 
   &.guest-message {
-    align-items: flex-end;
+    align-items: flex-start;
   }
   .chat-message {
     font-size: 18px;
@@ -25,16 +26,17 @@ export const MessageInfo = styled.div`
   font-weight: bold;
   margin-bottom: 5px;
 
-  &.guest-message {
+  &.local-message {
     flex-direction: row-reverse;
   }
-  .local_message {
+
+  .local-message {
     color: blue;
-    margin-right: 5px;
+    margin-left: 5px;
   }
   .guest-message {
     color: blue;
-    margin-left: 5px;
+    margin-right: 5px;
   }
 
   .time {
