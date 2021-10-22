@@ -15,14 +15,15 @@ const isArtMatchToFilter = ({ searchTerm, values }) => {
 };
 
 export const GalleryProvider = ({ children }) => {
+  const [unfilteredArts, setUnfilteredArts] = useState([]);
   const [arts, setArts] = useState([]);
   const [art, setArt] = useState({});
 
   const filterGallery = async ({ searchTerm }) => {
     // Undo filtering
-    if (isEmpty(searchTerm)) return setArts(await galleryService.getAll());
+    if (isEmpty(searchTerm)) return setArts(unfilteredArts);
 
-    const filteredArts = filter(arts, (art) => {
+    const filteredArts = filter(unfilteredArts, (art) => {
       const { name, artist_name } = art;
       return isArtMatchToFilter({
         searchTerm,
@@ -45,6 +46,7 @@ export const GalleryProvider = ({ children }) => {
   const getAllArts = async () => {
     const galleryArts = await galleryService.getAll();
     setArts(galleryArts);
+    setUnfilteredArts(galleryArts);
   };
 
   return (
