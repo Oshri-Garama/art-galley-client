@@ -1,9 +1,9 @@
 import React from "react";
 import { MessageWrapper, MessageInfo } from "./Message.style";
 
-const Message = ({ data, currentUser }) => {
+const Message = ({ data, currentUserNickname }) => {
   const { nickname, message, time, chatInformation } = data;
-  const isMyMessage = currentUser === nickname;
+  const isMyMessage = currentUserNickname === nickname;
   return (
     <MessageWrapper
       className={(!isMyMessage || chatInformation) && "guest-message"}

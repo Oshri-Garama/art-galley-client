@@ -8,13 +8,11 @@ export const ChatProvider = ({ children }) => {
   const [nickname, setNickname] = useState("");
 
   const joinRoom = async (data) => {
-    socket.emit("join_chat", { artId: data.roomId });
-    sendMessage(data);
+    socket.emit("join_chat", data);
   };
 
   const leaveRoom = async (data) => {
-    socket.emit("leave_chat", { artId: data.roomId });
-    sendMessage(data);
+    socket.emit("leave_chat", data);
   };
 
   const sendMessage = async (data) => {

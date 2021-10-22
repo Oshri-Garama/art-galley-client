@@ -16,23 +16,8 @@ import {
   NicknameSelectPopupContent,
 } from "./Chat.style";
 import { ChatContext } from "../../../context/ChatContext";
-import moment from "moment";
 import ScrollToBottom from "react-scroll-to-bottom";
-
-const getFormattedMessage = ({
-  message,
-  nickname,
-  roomId,
-  chatInformation,
-}) => {
-  return {
-    roomId,
-    nickname,
-    message,
-    chatInformation,
-    time: moment().format("LT"),
-  };
-};
+import moment from "moment";
 
 const Chat = ({ art, history }) => {
   const {
@@ -63,11 +48,12 @@ const Chat = ({ art, history }) => {
     }
 
     if (!isEmpty(currentMessage)) {
-      const data = getFormattedMessage({
-        roomId: art.id,
+      const data = {
+        artId: art.id,
         nickname,
         message: currentMessage,
-      });
+        time: moment().format("LT"),
+      };
       setCurrentMessage("");
       await sendMessage(data);
       setCurrentMessages((list) => [...list, data]);
@@ -76,15 +62,12 @@ const Chat = ({ art, history }) => {
 
   const onGoBack = async () => {
     history.replace("/");
-    const data = getFormattedMessage({
-      roomId: art.id,
+    const data = {
+      artId: art.id,
       nickname,
-      message: `${nickname} just left the room`,
-      chatInformation: true,
-    });
+    };
 
     await leaveRoom(data);
-    setCurrentMessages((list) => [...list, data]);
   };
 
   useEffect(() => {
@@ -95,12 +78,10 @@ const Chat = ({ art, history }) => {
 
   useEffect(() => {
     if (!isEmpty(getCurrentNickname())) {
-      const data = getFormattedMessage({
-        roomId: art.id,
+      const data = {
+        artId: art.id,
         nickname,
-        message: `${nickname} just entered the room`,
-        chatInformation: true,
-      });
+      };
       joinRoom(data);
     }
   }, [getCurrentNickname, joinRoom, art, nickname]);
@@ -127,7 +108,7 @@ const Chat = ({ art, history }) => {
           </IconButton>
           <ScrollToBottom className="messages-wrapper">
             {currentMessages.map((data, index) => (
-              <Message key={index} data={data} currentUser={nickname} />
+              <Message key={index} data={data} currentUserNickname={nickname} />
             ))}
           </ScrollToBottom>
           {showNicknameSelectPopup && (
@@ -165,7 +146,6 @@ const Chat = ({ art, history }) => {
             placeholder="Type a message..."
             multiline
             rows="2"
-            autoComplete={false}
             value={currentMessage}
             disabled={showNicknameSelectPopup}
             onChange={(event) => setCurrentMessage(event.target.value)}
