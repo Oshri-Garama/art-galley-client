@@ -35,22 +35,23 @@ const getFormattedMessage = ({
 };
 
 const Chat = ({ art, history }) => {
-  const { socket, joinRoom, leaveRoom, sendMessage } = useContext(ChatContext);
+  const {
+    socket,
+    joinRoom,
+    leaveRoom,
+    sendMessage,
+    getCurrentNickname,
+    setCurrentNickname,
+  } = useContext(ChatContext);
   const [currentMessage, setCurrentMessage] = useState("");
   const [currentMessages, setCurrentMessages] = useState([]);
-  const [nickname, setNickname] = useState("");
   const [showNicknameSelectPopup, setShowNicknameSelectPopup] = useState(false);
+  const [nickname, setNickname] = useState(getCurrentNickname());
 
   const onSubmitNickname = () => {
     if (!isEmpty(art) && !isEmpty(nickname)) {
-      const data = getFormattedMessage({
-        roomId: art.id,
-        nickname,
-        message: `${nickname} just entered the room`,
-        chatInformation: true,
-      });
-      joinRoom(data);
       setShowNicknameSelectPopup(false);
+      setCurrentNickname(nickname);
     }
   };
 
@@ -89,6 +90,18 @@ const Chat = ({ art, history }) => {
       setCurrentMessages((list) => [...list, data]);
     });
   }, [socket]);
+
+  useEffect(() => {
+    if (!isEmpty(getCurrentNickname())) {
+      const data = getFormattedMessage({
+        roomId: art.id,
+        nickname,
+        message: `${nickname} just entered the room`,
+        chatInformation: true,
+      });
+      joinRoom(data);
+    }
+  }, [getCurrentNickname, joinRoom, art, nickname]);
 
   return (
     <Card

@@ -1,10 +1,12 @@
-import { createContext } from "react";
+import { createContext, useState } from "react";
 import io from "socket.io-client";
 const socket = io.connect(process.env.REACT_APP_IO_SOCKET_SERVER_ORIGIN);
 
 export const ChatContext = createContext();
 
 export const ChatProvider = ({ children }) => {
+  const [nickname, setNickname] = useState("");
+
   const joinRoom = async (data) => {
     socket.emit("join_chat", { artId: data.roomId });
     sendMessage(data);
@@ -19,6 +21,9 @@ export const ChatProvider = ({ children }) => {
     await socket.emit("send_message", data);
   };
 
+  const getCurrentNickname = () => nickname;
+  const setCurrentNickname = (nickname) => setNickname(nickname);
+
   return (
     <ChatContext.Provider
       value={{
@@ -26,6 +31,9 @@ export const ChatProvider = ({ children }) => {
         leaveRoom,
         sendMessage,
         socket,
+        getCurrentNickname,
+        setCurrentNickname,
+        setNickname,
       }}
     >
       {children}
