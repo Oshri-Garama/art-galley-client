@@ -152,13 +152,18 @@ const Chat = ({ art, history }) => {
             className="chat-input"
             placeholder="Type a message..."
             multiline
-            rows="2"
+            maxRows="2"
             value={currentMessage}
             disabled={showNicknameSelectPopup}
             onChange={(event) => setCurrentMessage(event.target.value)}
-            onKeyPress={(event) => {
-              event.key === "Enter" && sendChatMessage();
-            }}
+            /**
+             * Decided at the end to allow multiple lines when clicking "Enter"
+             * instead of sending the message,
+             * for a sending message shortcut press Ctrl + Enter
+             */
+            onKeyDown={(event) =>
+              event.key === "Enter" && event.ctrlKey && sendChatMessage()
+            }
           />
           <Button
             endIcon={<Send />}

@@ -13,6 +13,7 @@ export const MessageWrapper = styled.div`
   }
   .chat-message {
     font-size: 18px;
+    white-space: pre-line;
   }
 
   .info-message {

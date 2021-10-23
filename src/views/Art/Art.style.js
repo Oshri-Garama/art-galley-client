@@ -17,15 +17,19 @@ export const ArtInformation = styled.div`
 
   .description {
     display: -webkit-box;
-    padding-top: 5px;
     font-size: 14px;
+    margin-top: 5px;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
 `;
 
-export const StyledLink = styled(Link)`
+/**
+ * Undecorated link uses to warp the art's Card,
+ * the decoration is the content of the card.
+ */
+export const UndecoratedLink = styled(Link)`
   color: inherit;
   &:focus,
   &:hover,

@@ -24,6 +24,7 @@ const ArtPage = ({ match, history }) => {
 
     fetchArt();
 
+    // Look for the ref => current only after the art is fetched from th backend
     if (!isEmpty(imageRef.current)) {
       const { clientWidth, clientHeight } = imageRef.current;
       setImageInformation(
@@ -55,7 +56,7 @@ const ArtPage = ({ match, history }) => {
               <span className="art-name">{art.name}</span>
               <span className="artist-name">By {art.artist_name}</span>
               <StyledTooltip title={art.description}>
-                <span className="description">{art.description}</span>
+                <p className="description">{art.description}</p>
               </StyledTooltip>
             </ArtInformationExtended>
           </CardContent>

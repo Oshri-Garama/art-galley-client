@@ -24,7 +24,7 @@ export const ArtInformationExtended = styled.div`
 
   .description {
     display: -webkit-box;
-    padding-top: 5px;
+    margin-top: 10px;
     font-size: 20px;
     -webkit-line-clamp: 8;
     -webkit-box-orient: vertical;
