@@ -1,6 +1,6 @@
 import { createContext, useState } from "react";
 import io from "socket.io-client";
-const socket = io.connect(process.env.REACT_APP_IO_SOCKET_SERVER_ORIGIN);
+const socket = io.connect(process.env.REACT_APP_SERVER_ORIGIN);
 
 export const ChatContext = createContext();
 
