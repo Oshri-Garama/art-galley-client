@@ -30,10 +30,10 @@ const Chat = ({ art, history }) => {
   } = useContext(ChatContext);
   const [currentMessage, setCurrentMessage] = useState("");
   const [currentMessages, setCurrentMessages] = useState([]);
-  const [showNicknameSelectPopup, setShowNicknameSelectPopup] = useState(
+  const [showNicknameSelectPopup, setShowNicknameSelectPopup] = useState(() =>
     isEmpty(getCurrentNickname())
   );
-  const [nickname, setNickname] = useState(getCurrentNickname());
+  const [nickname, setNickname] = useState(() => getCurrentNickname());
 
   const onSubmitNickname = () => {
     if (!isEmpty(art) && !isEmpty(nickname)) {
@@ -71,6 +71,13 @@ const Chat = ({ art, history }) => {
   };
 
   useEffect(() => {
+    return () => {
+      setCurrentMessage({});
+      setCurrentMessages([]);
+    };
+  }, []);
+
+  useEffect(() => {
     socket.on("receive_message", (data) => {
       setCurrentMessages((list) => [...list, data]);
     });
@@ -84,7 +91,7 @@ const Chat = ({ art, history }) => {
       };
       joinRoom(data);
     }
-  }, [getCurrentNickname, joinRoom, art, nickname]);
+  }, [getCurrentNickname, art, nickname]);
 
   return (
     <Card

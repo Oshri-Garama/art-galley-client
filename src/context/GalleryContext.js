@@ -37,7 +37,7 @@ export const GalleryProvider = ({ children }) => {
   const getArtById = async ({ artId, history }) => {
     const art = await galleryService.getArtById({ artId });
     if (isEmpty(art)) {
-      history.replace("/");
+      return history.replace("/");
     }
 
     setArt(art);

@@ -5,22 +5,22 @@ import isEmpty from "lodash/isEmpty";
 import StyledTooltip from "../../components/StyledTooltip/StyledTooltip";
 
 const Art = ({ art }) => {
-  const imageRef = useRef("");
-  const [imageWidth, setImageWidth] = useState("");
-  const [imageHeight, setImageHeight] = useState("");
+  const imageRef = useRef(null);
+  const [imageInformation, setImageInformation] = useState("");
 
   useEffect(() => {
-    if (!isEmpty(imageRef) && !isEmpty(imageRef.current)) {
-      const { naturalHeight, naturalWidth } = imageRef.current;
-      setImageWidth(naturalWidth);
-      setImageHeight(naturalHeight);
+    if (!isEmpty(imageRef.current)) {
+      const { clientWidth, clientHeight } = imageRef.current;
+      setImageInformation(
+        `The dimensions of the image are now: ${clientWidth}X${clientHeight}`
+      );
     }
-  }, [imageRef, setImageHeight, setImageWidth]);
+  }, [imageRef]);
 
   return (
     <Card id={art.id} sx={{ flexBasis: "20%", margin: 2, height: 380 }}>
       <StyledLink to={`/art/${art.id}`}>
-        <StyledTooltip title={`${imageWidth}X${imageHeight}`}>
+        <StyledTooltip title={imageInformation}>
           <CardMedia
             ref={imageRef}
             height="250"

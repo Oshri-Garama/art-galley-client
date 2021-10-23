@@ -8,11 +8,11 @@ export const ChatProvider = ({ children }) => {
   const [nickname, setNickname] = useState("");
 
   const joinRoom = async (data) => {
-    socket.emit("join_chat", data);
+    await socket.emit("join_chat", data);
   };
 
   const leaveRoom = async (data) => {
-    socket.emit("leave_chat", data);
+    await socket.emit("leave_chat", data);
   };
 
   const sendMessage = async (data) => {
@@ -20,7 +20,6 @@ export const ChatProvider = ({ children }) => {
   };
 
   const getCurrentNickname = () => nickname;
-  const setCurrentNickname = (nickname) => setNickname(nickname);
 
   return (
     <ChatContext.Provider
@@ -30,8 +29,7 @@ export const ChatProvider = ({ children }) => {
         sendMessage,
         socket,
         getCurrentNickname,
-        setCurrentNickname,
-        setNickname,
+        setCurrentNickname: setNickname,
       }}
     >
       {children}
